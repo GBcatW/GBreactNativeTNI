@@ -1,21 +1,19 @@
 import {StyleSheet, View, Text, Button, Alert } from "react-native";
 import React from "react";
 
-const onClickMe = () => {
-    Alert.alert("Hello", "Input your fullname");
-  };
 
 type ContextProps ={
-    text:string;
+    name?: string;
+    text?: string;
 };
 
-const Content = ({text}:ContextProps): React.JSX.Element => {
+const Content = ({text, name}:ContextProps): React.JSX.Element => {
   return (
     <View style={styles.content}>
         <Text style={styles.text}>{text}</Text>
       <Button
         title="Click Me"
-        onPress={onClickMe}
+        onPress={()=> Alert.alert("Hello", name)}
         color="orange"
         />
     </View>

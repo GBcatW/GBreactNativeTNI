@@ -8,8 +8,8 @@ export default function App(): React.JSX.Element {
 
   return (
     <View style={styles.container}>
-      <AppHeader text="Input your fullname"/>
-      <Content text="Message from App.tsx" />
+      <AppHeader text="Message from App.tsx" fullName="Nattawut Worraratphaisarn"/>
+      <Content text="Message from App.tsx" name="Nattawut Worraratphaisarn" />
       <StatusBar style="auto" />
       <AppFooter text="Thai-Nichi Institute of Technology"/>
     </View>

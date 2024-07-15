@@ -2,14 +2,15 @@ import { StyleSheet, View, Text } from "react-native";
 import React from "react";
 
 type AppHeaderProps = {
-    text: string;
+  fullName?: string;
+  text?: string;
 };
 
-const AppHeader = ({text}:AppHeaderProps): React.JSX.Element => {
+const AppHeader = ({text, fullName}: AppHeaderProps): React.JSX.Element => {
   return (
     <View style={styles.header}>
-        <Text style={styles.headerText}>{text}</Text>
-        <Text style={styles.subtitleText}>Message from App.ts</Text>
+      <Text style={styles.headerText}>{fullName}</Text>
+      <Text style={styles.subtitleText}>{text}</Text>
     </View>
   );
 };
