@@ -5,6 +5,7 @@ import Content from "./components/Content";
 import { stylesPractice} from './styles/styles';
 import { useState, useEffect, Component } from "react";
 
+
 function App(): React.JSX.Element {
   const [fullName, setFullname] = useState('');
   const [message, setMessage] = useState('Message from App.tsx');
@@ -18,10 +19,15 @@ function App(): React.JSX.Element {
     console.log(`Fullname has changed to : ${fullName}`);
   },[fullName]);//This will run whenever 'fullname' changes
 
+  const handleButtonClick=() => {
+    Alert.alert("Hello", `Input your fullname : ${fullName}`);
+  };
+
   return (
     <View style={styles.container}>
       <AppHeader fullName = {fullName} message={message}/>
-      <Content  message = {message} fullName = {fullName}/>
+      {/*<Content  message = {message} fullName = {fullName}/>*/}
+      <Content  message = {message} onButtonClick = {handleButtonClick}/>
       <AppFooter footerMessage ={footerMessage} />
       <TextInput
       style = {stylesPractice.input}
