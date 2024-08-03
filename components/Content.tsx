@@ -1,19 +1,27 @@
-import {StyleSheet, View, Text, Button, Alert } from "react-native";
+import { View, Text, Button, Alert } from 'react-native';
+import { stylesPractice} from '../styles/styles';
 import React from "react";
 
 
-type ContextProps ={
-    name?: string;
-    text?: string;
+interface ContextProps {
+    message: string;
+    fullName: string;
 };
 
-const Content = ({text, name}:ContextProps): React.JSX.Element => {
+const Content = ({message, fullName}:ContextProps): React.JSX.Element => {
+  const [displayFullname, setDisplayFullname] = React.useState('');
+
+  const handleButtonClick = () =>{
+    setDisplayFullname(fullName);
+    Alert.alert("Hello", `Input your fullname : ${fullName}`);
+  };
   return (
-    <View style={styles.content}>
-        <Text style={styles.text}>{text}</Text>
+    <View style={stylesPractice.content}>
+        <Text style={stylesPractice.text}>{message}</Text>
+        <Text style={stylesPractice.text}>{displayFullname}</Text>
       <Button
         title="Click Me"
-        onPress={()=> Alert.alert("Hello", name)}
+        onPress={handleButtonClick}
         color="orange"
         />
     </View>
@@ -22,14 +30,3 @@ const Content = ({text, name}:ContextProps): React.JSX.Element => {
 
 export default Content;
 
-const styles = StyleSheet.create({
-  content: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  text: {
-    fontSize: 18,
-    marginBottom: 20,
-  },
-});
