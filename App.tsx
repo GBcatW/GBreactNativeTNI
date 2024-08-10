@@ -1,11 +1,18 @@
-import { View, Text } from 'react-native'
+import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
-import ProfileScreen from './components/ProfileScreen'
-const App = (): React.JSX.Element => {
-return (
-  <View>
-    <ProfileScreen/>
-  </View>
+import ProfileSrceen from './components/ProfileScreen'
+import UseEffectExample from './components/UseEffectExample'
+import FlastlistExample from './components/FlastListExample'
+import FlastListcallBackend from './components/FlastListcallBackend'
+
+const App = () => {
+  return (
+    <View>
+      <FlastListcallBackend/>
+    </View>
   )
 }
+
 export default App
+
+const styles = StyleSheet.create({})
