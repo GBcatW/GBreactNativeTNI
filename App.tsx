@@ -5,11 +5,14 @@ import UseEffectExample from './components/UseEffectExample'
 import FlastlistExample from './components/FlastListExample'
 import FlastListcallBackend from './components/FlastListcallBackend'
 import NewsApp from './components/NewsApp'
+import AxiosgetData from './components/AxiosgetData'
+import AxiosPostData from './components/AxiosPostData'
+import WeatherLondon from './components/WeatherLondon'
 
 const App = () => {
   return (
     <View>
-      <NewsApp/>
+      <WeatherLondon/>
     </View>
   )
 }
