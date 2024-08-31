@@ -1,10 +1,30 @@
-import { StyleSheet, Text, View } from "react-native";
-import React from "react";
+import { StyleSheet, Text, View, Alert, Modal, Pressable, Button } from "react-native";
+import React ,{useState} from "react";
 
-const ModelExample = () => {
+const ModelExample = ():React.JSX.Element => {
+    const [modalVisible, setModalVisible] = useState(false);
+
   return (
-    <View>
-      <Text>ModelExample</Text>
+    <View style={styles.centeredView}>
+        <Pressable 
+          style={[styles.button,styles.buttonOpen]} 
+          onPress={() => setModalVisible(true)}>
+            <Text style={styles.textStyle}>show Modal</Text>
+        </Pressable>
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={modalVisible}
+          onRequestClose={() => {setModalVisible(!setModalVisible)}}>
+            <View style={styles.modalView}>
+                <Text style={styles.modalText}>Hello React Native</Text>
+                <Pressable 
+                  style={[styles.button,styles.buttonClose]} 
+                  onPress={() => setModalVisible(false)}>
+                    <Text style={styles.textStyle}>Hide Modal</Text>
+                </Pressable>
+            </View>
+        </Modal>
     </View>
   );
 };

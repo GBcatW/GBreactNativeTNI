@@ -8,11 +8,13 @@ import NewsApp from './components/NewsApp'
 import AxiosgetData from './components/AxiosgetData'
 import AxiosPostData from './components/AxiosPostData'
 import WeatherLondon from './components/WeatherLondon'
+import ModelExample from './components/ModelExample'
+import WeatherApp from './components/WeatherApp'
 
 const App = () => {
   return (
     <View>
-      <WeatherLondon/>
+      <WeatherApp/>
     </View>
   )
 }
