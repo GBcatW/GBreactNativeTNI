@@ -35,13 +35,13 @@ const WeatherApp = (): React.JSX.Element => {
       <Text style={styles.title}>Weather App</Text>
       <Pressable
         style={[styles.button, styles.button]}
-        onPress={() => setModalVisible(true)}
+        onPress={() => {setModalVisible(true), toggleModal("London")}}
       >
         <Text style={styles.buttonText}>London</Text>
       </Pressable>
       <Pressable
         style={[styles.button, styles.button]}
-        onPress={() => setModalVisible(true)}
+        onPress={() => {setModalVisible(true), toggleModal("Bangkok")}}
       >
         <Text style={styles.buttonText}>Bangkok</Text>
       </Pressable>
