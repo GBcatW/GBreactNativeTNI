@@ -1,22 +1,29 @@
 import React from 'react';
+import { HeaderButtonsProvider } from 'react-navigation-header-buttons';
 
 import HomeScreen from './screens/HomeScreen';
 import AboutScreen from './screens/AboutScreen';
+import MenuScreen from './screens/MenuScreen';
+
 import CreatePostScreen from './screens/CreatePostScreen';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NavigationContainer } from '@react-navigation/native';
+import { createDrawerNavigator } from '@react-navigation/drawer';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import ProductScreen from './screens/ProductScreen';
 
 const App = (): React.JSX.Element => {
 
   const HomeStack = createNativeStackNavigator();
-
-  return (
-    <NavigationContainer>
-      <HomeStack.Navigator 
+  const ProductStack = createNativeStackNavigator();
+  const Drawer = createDrawerNavigator();
+  function HomeStackScreen(){
+    return (
+    <HomeStack.Navigator 
       initialRouteName='Home'
       screenOptions={{
-        headerStyle:{backgroundColor:'#ffbefa'},
-        headerTintColor:'#e333d5',
+        //headerStyle:{backgroundColor:'#ffbefa'},
+       // headerTintColor:'#e333d5',
         headerTitleStyle:{fontWeight:'bold'},
         }} 
       >  
@@ -35,9 +42,52 @@ const App = (): React.JSX.Element => {
             headerTitleAlign:'center'
             }} */
         /> 
-        <HomeStack.Screen name='CreatePost' component={CreatePostScreen} />
       </HomeStack.Navigator>
-    </NavigationContainer>
+    )
+  }
+  function ProductStackScreen(){
+    return (
+    <ProductStack.Navigator 
+      initialRouteName='Home'
+      screenOptions={{
+        //headerStyle:{backgroundColor:'#ffbefa'},
+       // headerTintColor:'#e333d5',
+        headerTitleStyle:{fontWeight:'bold'},
+        }} 
+      >  
+        <ProductStack.Screen 
+          name='Product' 
+          component={ProductScreen}
+          options={{title:'สินค้า'}} />
+        <ProductStack.Screen 
+          name='About' 
+          component={AboutScreen}
+        /*  options={{
+            title:'เกี่ยวกับเรา',
+            headerStyle:{backgroundColor:'#ffbefa'},
+            headerTintColor:'#e333d5',
+            headerTitleStyle:{fontWeight:'bold'},
+            headerTitleAlign:'center'
+            }} */
+        /> 
+      </ProductStack.Navigator>
+    )
+  }
+
+  return (
+    <SafeAreaProvider>
+      <NavigationContainer>
+       <HeaderButtonsProvider stackType='native'>
+        <Drawer.Navigator 
+       screenOptions={{headerShown: false}}
+        drawerContent={(props) => <MenuScreen{...props}/>}
+        >
+        <Drawer.Screen name = "HomeStack" component={HomeStackScreen}/>
+        <Drawer.Screen name = "ProductStack" component={ProductStackScreen}/>
+        </Drawer.Navigator>
+       </HeaderButtonsProvider>
+      </NavigationContainer>
+    </SafeAreaProvider>
   );
 }
 
