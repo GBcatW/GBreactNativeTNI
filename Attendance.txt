@@ -1,3 +1,3 @@
 StudentID: 2213110113
 Fullname: Nattawut Worraratphaisarn
-Date: 31-8-67
+Date: 7-9-67
