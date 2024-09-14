@@ -11,6 +11,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import ProductScreen from './screens/ProductScreen';
+import DetailScreen from './screens/DetailScreen';
 
 const App = (): React.JSX.Element => {
 
@@ -55,21 +56,8 @@ const App = (): React.JSX.Element => {
         headerTitleStyle:{fontWeight:'bold'},
         }} 
       >  
-        <ProductStack.Screen 
-          name='Product' 
-          component={ProductScreen}
-          options={{title:'สินค้า'}} />
-        <ProductStack.Screen 
-          name='About' 
-          component={AboutScreen}
-        /*  options={{
-            title:'เกี่ยวกับเรา',
-            headerStyle:{backgroundColor:'#ffbefa'},
-            headerTintColor:'#e333d5',
-            headerTitleStyle:{fontWeight:'bold'},
-            headerTitleAlign:'center'
-            }} */
-        /> 
+          <ProductStack.Screen name="Products" component={ProductScreen}/>
+          <ProductStack.Screen name="Details" component={DetailScreen}/>
       </ProductStack.Navigator>
     )
   }
