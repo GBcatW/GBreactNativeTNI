@@ -7,15 +7,20 @@ import MenuScreen from './screens/MenuScreen';
 
 import CreatePostScreen from './screens/CreatePostScreen';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, useFocusEffect } from '@react-navigation/native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { Provider } from "react-redux";
+import { store } from './redux-toolkit/store';
+import { useAppSelector, useAppDispatch } from "./redux-toolkit/hooks";
+import { selectAuthState, setIsLogin, setIsLoading, setProfile } from "./auth/auth-slice";
+import { getProfile } from './services/auth-service';
+
 import ProductScreen from './screens/ProductScreen';
 import DetailScreen from './screens/DetailScreen';
 import LoginScreen from './screens/LoginScreen';
 import Toast from 'react-native-toast-message';
-
-
+import { ActivityIndicator, View } from 'react-native';
 
 
   const HomeStack = createNativeStackNavigator();
@@ -79,13 +84,43 @@ import Toast from 'react-native-toast-message';
     )
   }
   const App = (): React.JSX.Element => {
-    const [isLogin] = useState(false);
 
+    const {isLogin, isLoading} = useAppSelector(selectAuthState);
+    const dispatch =useAppDispatch();
+
+    const checkLogin = async ()=>{
+      try{
+        dispatch(setIsLoading(true));
+        const response = await getProfile();
+        if(response?.data.data.user){
+          dispatch(setProfile(response.data.data.user));
+          dispatch(setIsLogin(true));
+        }else{
+          dispatch(setIsLogin(false));
+        }
+      } catch (error){
+        console.log(error);
+      } finally {
+        dispatch(setIsLoading(false));
+      }
+    }
+
+    useFocusEffect(
+      React.useCallback(()=>{
+        checkLogin();
+      }, [])
+    )
+
+    if(isLoading){
+      return(
+        <View style={{flex:1,justifyContent:'center',alignItems:'center'}}>
+          <ActivityIndicator size='large' color='blue'/>
+        </View>
+      )
+    }
 
   return (
     <>
-     <SafeAreaProvider>
-      <NavigationContainer>
        <HeaderButtonsProvider stackType='native'>
        {isLogin ? (
         <Drawer.Navigator 
@@ -101,11 +136,21 @@ import Toast from 'react-native-toast-message';
         )
       }
        </HeaderButtonsProvider>
-      </NavigationContainer>
-    </SafeAreaProvider>
     <Toast/>
     </>
   );
 }
 
-export default App;
+const AppWrapper = ()=>{
+  return (
+    <Provider store={store}>
+      <SafeAreaProvider>
+        <NavigationContainer>
+          <App/>
+        </NavigationContainer>
+      </SafeAreaProvider>
+    </Provider>
+  );
+};
+
+export default AppWrapper;

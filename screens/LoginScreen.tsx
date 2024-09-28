@@ -1,13 +1,20 @@
 import { View } from "react-native";
-import React from "react";
-import { Text, Card, Input, Button } from "@rneui/base";
+import React, { useState } from "react";
+import { Text, Card, Input, Button, Icon } from "@rneui/base";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useForm, Controller } from "react-hook-form";
 import { login } from "../services/auth-service";
 import { AxiosError } from "../services/http-service";
 import Toast from "react-native-toast-message";
+import { setIsLogin } from "../auth/auth-slice";
+import { useAppDispatch } from "../redux-toolkit/hooks";
+
 const LoginScreen = (): React.JSX.Element => {
+
+  const[showPassword, setshowPassword] = useState(false);
+  const dispatch = useAppDispatch();
+  
   //1.define validation with Yub schema
   const schema = yup.object().shape({
     email: yup
@@ -32,7 +39,8 @@ const LoginScreen = (): React.JSX.Element => {
     try {
       const response = await login(data.email, data.password);
       if (response.status === 200) {
-        Toast.show({type:'success',text1:'Login Success'})
+        dispatch(setIsLogin(true));
+        //Toast.show({type:'success',text1:'Login Success'})
        // console.log("login success");
       }
     } catch (error: any) {
@@ -72,8 +80,16 @@ const LoginScreen = (): React.JSX.Element => {
             <Input
               placeholder="Password"
               leftIcon={{ name: "key" }}
-              keyboardType="number-pad"
-              secureTextEntry
+              //เพิ่มไอคอนลูกตา
+              rightIcon={
+                <Icon
+                  name={showPassword?"eye":"eye-off"}
+                  type="feather"
+                  onPress={()=>setshowPassword(!showPassword)}
+                />
+              }
+              keyboardType="default"
+              secureTextEntry = {!showPassword}
               onBlur={onBlur}
               onChangeText={onChange}
               value={value}
