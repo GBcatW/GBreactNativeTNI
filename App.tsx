@@ -15,18 +15,81 @@ import { store } from './redux-toolkit/store';
 import { useAppSelector, useAppDispatch } from "./redux-toolkit/hooks";
 import { selectAuthState, setIsLogin, setIsLoading, setProfile } from "./auth/auth-slice";
 import { getProfile } from './services/auth-service';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import ProductScreen from './screens/ProductScreen';
 import DetailScreen from './screens/DetailScreen';
 import LoginScreen from './screens/LoginScreen';
+import CameraScreen from './screens/CameraScreen';
+
 import Toast from 'react-native-toast-message';
 import { ActivityIndicator, View } from 'react-native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 
   const HomeStack = createNativeStackNavigator();
   const ProductStack = createNativeStackNavigator();
   const LoginStack = createNativeStackNavigator();
+  const CameraStack = createNativeStackNavigator();
+
   const Drawer = createDrawerNavigator();
+
+  const Tab = createBottomTabNavigator();
+
+  function TabContainer(){
+    return(
+      <Tab.Navigator 
+        screenOptions={({route})=> ({
+          tabBarIcon: ({ focused, color, size }) => {
+            let iconName = "";
+          if (route.name === "HomeStack"){
+            iconName = focused
+              ? "home"
+              : "home-outline";
+          }else if (route.name === "CameraStack"){
+            iconName = focused 
+              ? "camera" 
+              : "camera-outline";
+          }
+          return <Ionicons name={iconName} size={size} color={color}/>;
+          },
+          tabBarActiveTintColor: 'white',
+          tabBarInactiveTintColor: 'white',
+          tabBarStyle: { 
+            backgroundColor: '#216aff', 
+            height: 60, 
+            paddingBottom: 3,
+          }
+        })}>
+        <Tab.Screen 
+          name="HomeStack"
+          component={HomeStackScreen}
+          options={{tabBarLabel:'หน้าหลัก'}}
+        />
+        <Tab.Screen 
+          name="CameraStack"
+          component={CameraStackScreen}
+          options={{tabBarLabel:'กล้อง'}}
+        />
+        
+      </Tab.Navigator>
+    )
+  }
+
+  function CameraStackScreen(){
+    return (
+    <CameraStack.Navigator 
+      initialRouteName='Home'
+      screenOptions={{
+        headerTitleStyle:{fontWeight:'bold'},
+        headerShown:false,
+        }} 
+      >  
+          <CameraStack.Screen name="camera" component={CameraScreen}/>
+      </CameraStack.Navigator>
+    )
+  }
+
   function HomeStackScreen(){
     return (
     <HomeStack.Navigator 
@@ -127,7 +190,7 @@ import { ActivityIndicator, View } from 'react-native';
         screenOptions={{headerShown: false}}
          drawerContent={(props) => <MenuScreen{...props}/>}
          >
-         <Drawer.Screen name = "HomeStack" component={HomeStackScreen}/>
+         <Drawer.Screen name = "Home" component={TabContainer}/>
          <Drawer.Screen name = "ProductStack" component={ProductStackScreen}/>
          </Drawer.Navigator>
        )
